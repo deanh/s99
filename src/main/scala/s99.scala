@@ -11,7 +11,6 @@ object s99 {
   @tailrec
   def penultimate[A](list: List[A]): Option[A] = list match {
     case Nil               => None
-    case h :: Nil          => None
     case one :: two :: Nil => Some(one)
     case h :: t            => penultimate(t)
   }
@@ -29,7 +28,19 @@ object s99 {
     case h :: t => length(t, 1 + cnt)
   }
 
-  def reverse[A](list: List[A]): List[A] = ???
+  def reverse[A](list: List[A]): List[A] = list match {
+    case Nil    => Nil
+    case h :: t => reverse(t) ++ List(h)
+  }
 
-  def isPalindrome[A](list: List[A]): Boolean = ???
+  def isPalindrome[A](list: List[A]): Boolean =
+    list == reverse(list)
+
+  def flatten(list: List[Any]): List[Any] = list match {
+    case Nil => Nil
+    case h :: t => h match {
+      case xs : List[_] => flatten(xs) ::: flatten(t)
+      case x            => h :: flatten(t)
+    }
+  }
 }
