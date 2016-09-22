@@ -1,6 +1,6 @@
 import annotation.tailrec
 
-object s99 {
+object s1to10 {
   // S01
   @tailrec
   def last[A](list: List[A]): Option[A] = list match {
