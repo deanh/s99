@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+printf "Problem number: "
+read PROB_NUM
+printf "Function name: "
+read FUNC_NAME
+
+MAIN_FILE=src/main/scala/s${PROB_NUM}.scala
+TEST_FILE=src/test/scala/s${PROB_NUM}Spec.scala
+
+echo $MAIN_FILE $TEST_FILE
+
+cat <<EOF > $MAIN_FILE
+import annotation.tailrec
+
+object s$PROB_NUM {
+  // S$PROB_NUM
+  def $FUNC_NAME = ???
+}
+EOF
+
+cat <<EOF > $TEST_FILE
+import org.specs2.mutable.Specification
+
+object s${PROB_NUM}Spec extends Specification {
+  "S$PROB_NUM: The '$FUNC_NAME' function" >> {
+    "has a test" >> {
+      true must_== false
+    }
+  }
+}
+EOF
+
