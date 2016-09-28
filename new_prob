@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 printf "Problem number: "
 read PROB_NUM
 printf "Function name: "
