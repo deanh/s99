@@ -2,9 +2,17 @@ import annotation.tailrec
 
 object s16 {
   // S16
-  def drop[T](n: Int, list: Seq[T]): Seq[T] =
-    for {
-      (el, i) <- list.zipWithIndex
-      if ((i + 1) % n != 0)
-    } yield el
+  def drop[T](n: Int, list: List[T]): List[T] = {
+    type State = (Int, List[T])
+    @tailrec
+    def dropWithState(n: Int, list: List[T], s: State): List[T] = {
+      val (cnt, acc) = s
+      (cnt % n, list) match {
+        case (_, Nil)    => Nil
+        case (0, h :: t) => dropWithState(n, t, (cnt + 1, acc))
+        case (_, h :: t) => dropWithState(n, t, (cnt + 1, h :: acc))
+      }
+    }
+    dropWithState(n, list, (1, Nil))
+  }
 }
